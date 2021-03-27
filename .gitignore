@@ -1,0 +1,12 @@
+client/node_modules
+client/.expo
+client/.expo-shared
+client/.vscode
+client/npm-debug.*
+client/*.jks
+client/*.p8
+client/*.p12
+client/*.key
+client/*.mobileprovision
+client/*.orig.*
+client/web-build/
