@@ -2,26 +2,28 @@ import { gql } from 'apollo-server-express';
 
 const typeDefs = gql`
   type User {
-    id: String!
+    id: ID!
     username: String!
   }
 
-  type Beer {
-    id: Int!
-    name: String!
-    brand: String
-    price: Float
+  type Task {
+    id: ID!
+    datetime: String!
+    details: String!
+    createdAt: String
+    user: User!
   }
 
   type Query {
     current: User
-    beer(id: Int!): Beer
-    beers(brand: String!): [Beer]
+    task(id: ID!): Task
+    tasks: [Task]
   }
 
   type Mutation {
     register(username: String!, password: String!): String
     login(username: String!, password: String!): String
+    addTask(datetime: String!, details: String!): Task
   }
 `;
 

@@ -1,10 +1,30 @@
-import { User } from '../models/index.js';
+import { User, Task } from '../models/index.js';
 
 const resolvers = {
   Query: {
     async current(_, args, { user }) {
       if (user) {
-        return await User.findOne({ where: { id: user.id } });
+        const currentUser = await User.findOne({ where: { id: user.id } });
+
+        return currentUser;
+      }
+      throw new Error("Sorry, you're not an authenticated user!");
+    },
+
+    async task(_, { id }, { user }) {
+      if (user) {
+        const task = await Task.findOne({ where: { id } });
+
+        return task;
+      }
+      throw new Error("Sorry, you're not an authenticated user!");
+    },
+
+    async tasks(_, {}, { user }) {
+      if (user) {
+        const tasks = await Task.findAll({ where: { userId: user.id } });
+
+        return tasks;
       }
       throw new Error("Sorry, you're not an authenticated user!");
     },
@@ -35,6 +55,21 @@ const resolvers = {
       const token = await user.generateAuthToken();
 
       return token;
+    },
+
+    async addTask(_, { datetime, details }, { user }) {
+      if (user) {
+        const newTask = new Task({
+          datetime,
+          details,
+          userId: user.id,
+        });
+
+        await newTask.save();
+
+        return newTask;
+      }
+      throw new Error("Sorry, you're not an authenticated user!");
     },
   },
 };

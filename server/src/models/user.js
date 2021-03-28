@@ -1,6 +1,7 @@
 import Sequelize from 'sequelize';
 import jwt from 'jsonwebtoken';
 import crypto from 'crypto';
+
 import sequelize from '../db/sequelize.js';
 
 const { DataTypes } = Sequelize;
