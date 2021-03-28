@@ -1,0 +1,116 @@
+import React, { useState } from 'react';
+import { Text, Card, Button } from 'react-native-elements';
+import { ScrollView, StyleSheet, useWindowDimensions } from 'react-native';
+import { FontAwesome } from '@expo/vector-icons';
+
+import Input from '../components/Input';
+
+const Signup = ({ navigation }) => {
+  const { width } = useWindowDimensions();
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [usernameError, setUsernameError] = useState('');
+  const [passwordError, setPasswordError] = useState('');
+  const [confirmPasswordError, setConfirmPasswordError] = useState('');
+
+  const resetValidationErrors = () => {
+    setUsernameError('');
+    setPasswordError('');
+    setConfirmPasswordError('');
+  };
+
+  const handleSignup = () => {
+    resetValidationErrors();
+
+    if (username && password && confirmPassword === password) {
+      console.log(username);
+      console.log(password);
+
+      navigation.navigate('Home');
+    }
+    if (password !== confirmPassword) {
+      setConfirmPasswordError('Passwords do not match');
+    }
+    if (!username) {
+      setUsernameError('Username cannot be empty');
+    }
+    if (!password) {
+      setPasswordError('Password cannot be empty');
+    }
+  };
+
+  return (
+    <ScrollView contentContainerStyle={styles.container}>
+      <Card containerStyle={width > 575 ? styles.card : styles.cardXs}>
+        <Card.Title h4>Task App</Card.Title>
+        <Input
+          leftIcon={<FontAwesome name="user" size={20} color="#888888" />}
+          placeholder="Username"
+          onChangeText={(value) => setUsername(value)}
+          errorMessage={usernameError}
+          style={{ outline: 'none' }}
+        />
+        <Input
+          leftIcon={<FontAwesome name="lock" size={20} color="#888888" />}
+          placeholder="Password"
+          secureTextEntry={true}
+          onChangeText={(value) => setPassword(value)}
+          errorMessage={passwordError}
+          style={{ outline: 'none' }}
+        />
+        <Input
+          leftIcon={<FontAwesome name="lock" size={20} color="#888888" />}
+          placeholder="Confirm password"
+          secureTextEntry={true}
+          onChangeText={(value) => setConfirmPassword(value)}
+          errorMessage={confirmPasswordError}
+          style={{ outline: 'none' }}
+        />
+        <Button
+          title="Sign Up"
+          buttonStyle={styles.signupBtn}
+          onPress={handleSignup}
+        />
+        <Text style={styles.login}>
+          Already have an account?{' '}
+          <Text
+            style={styles.loginLink}
+            onPress={() => navigation.navigate('Login')}
+          >
+            Login
+          </Text>
+        </Text>
+      </Card>
+    </ScrollView>
+  );
+};
+
+const styles = StyleSheet.create({
+  card: {
+    padding: 40,
+    marginHorizontal: 'auto',
+    width: 500,
+  },
+  cardXs: {
+    padding: 30,
+  },
+  container: {
+    justifyContent: 'center',
+  },
+  signupBtn: {
+    marginTop: 10,
+    backgroundColor: '#FEB708',
+  },
+  login: {
+    alignSelf: 'center',
+    marginTop: 10,
+    color: '#888888',
+  },
+  loginLink: {
+    fontWeight: 'bold',
+    color: '#888888',
+  },
+});
+
+export default Signup;
