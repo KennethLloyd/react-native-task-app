@@ -13,18 +13,9 @@ const User = sequelize.define(
       defaultValue: DataTypes.UUIDV4,
       primaryKey: true,
     },
-    firstName: {
+    username: {
       type: DataTypes.STRING,
       allowNull: false,
-    },
-    lastName: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    email: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      unique: 'email',
     },
     password: {
       type: DataTypes.STRING,
@@ -40,13 +31,15 @@ User.prototype.generateAuthToken = async function () {
   const user = this;
   const { id } = user;
 
-  const token = jwt.sign({ id: id.toString() }, process.env.JWT_SECRET);
+  const token = jwt.sign({ id: id.toString() }, process.env.JWT_SECRET, {
+    expiresIn: '1d',
+  });
 
   return token;
 };
 
-User.findByCredentials = async (email, password) => {
-  const user = await User.findOne({ where: { email } });
+User.findByCredentials = async (username, password) => {
+  const user = await User.findOne({ where: { username } });
 
   if (!user) {
     return null;

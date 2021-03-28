@@ -1,22 +1,43 @@
 import express from 'express';
+import { ApolloServer } from 'apollo-server-express';
+import jwt from 'express-jwt';
 import cors from 'cors';
-import path from 'path';
-import { fileURLToPath } from 'url';
 import initDB from './db/initialize.js';
-import initRouters from './routers/index.js';
+import typeDefs from './schemas/index.js';
+import resolvers from './resolvers/index.js';
 
 const app = express();
-const port = process.env.PORT || 3001;
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const auth = jwt({
+  secret: process.env.JWT_SECRET,
+  algorithms: ['HS256'],
+  credentialsRequired: false,
+});
 
-app.use(express.json()); // allows us to parse the request as json
+app.use(auth);
 app.use(cors());
-app.use('/apidoc', express.static(path.join(__dirname, '../docs')));
+
+const server = new ApolloServer({
+  typeDefs,
+  resolvers,
+  playground: {
+    endpoint: '/graphql',
+  },
+  context: ({ req }) => {
+    const user = req.headers.user
+      ? JSON.parse(req.headers.user)
+      : req.user
+      ? req.user
+      : null;
+    return { user };
+  },
+});
+
+server.applyMiddleware({ app });
+
+const port = process.env.PORT || 5000;
 
 (async () => {
   try {
-    initRouters(app);
     await initDB();
     console.log('Connection to database has been established successfully');
   } catch (error) {
@@ -26,5 +47,4 @@ app.use('/apidoc', express.static(path.join(__dirname, '../docs')));
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
-  console.log('See docs at /apidoc');
 });

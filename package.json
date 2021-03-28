@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "description": "",
   "scripts": {
+    "db:migrate": "npm run db-migrate --prefix server",
+    "db:seed": "npm run db-seed --prefix server",
     "dev:client": "npm run web --prefix client",
     "dev:server": "npm run dev --prefix server",
     "preinstall": "npm install --prefix client && npm install --prefix server",
