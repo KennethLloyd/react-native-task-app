@@ -1,3 +1,4 @@
+# Client
 client/node_modules
 client/.expo
 client/.expo-shared
@@ -10,3 +11,13 @@ client/*.key
 client/*.mobileprovision
 client/*.orig.*
 client/web-build/
+
+# Server
+server/node_modules
+server/docs
+server/.eslintcache
+server/.env
+server/dist
+
+# Root
+node_modules
