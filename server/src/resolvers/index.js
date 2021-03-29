@@ -71,6 +71,21 @@ const resolvers = {
       }
       throw new Error("Sorry, you're not an authenticated user!");
     },
+
+    async deleteTask(_, { id }, { user }) {
+      if (user) {
+        const task = await Task.findOne({ where: { id } });
+
+        if (!task) {
+          throw new Error('Task does not exist');
+        }
+
+        await task.destroy();
+
+        return task;
+      }
+      throw new Error("Sorry, you're not an authenticated user!");
+    },
   },
 };
 
