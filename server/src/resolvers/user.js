@@ -4,7 +4,7 @@ const userResolvers = {
   Query: {},
 
   Mutation: {
-    async register(_, { username, password }) {
+    async signup(_, { username, password }) {
       const newUser = new User({
         username,
         password,
