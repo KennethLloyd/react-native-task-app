@@ -2,15 +2,6 @@ import { User, Task } from '../models/index.js';
 
 const resolvers = {
   Query: {
-    async current(_, args, { user }) {
-      if (user) {
-        const currentUser = await User.findOne({ where: { id: user.id } });
-
-        return currentUser;
-      }
-      throw new Error("Sorry, you're not an authenticated user!");
-    },
-
     async task(_, { id }, { user }) {
       if (user) {
         const task = await Task.findOne({ where: { id } });
@@ -74,7 +65,7 @@ const resolvers = {
 
     async deleteTask(_, { id }, { user }) {
       if (user) {
-        const task = await Task.findOne({ where: { id } });
+        const task = await Task.findOne({ where: { id, userId: user.id } });
 
         if (!task) {
           throw new Error('Task does not exist');

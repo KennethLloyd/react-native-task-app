@@ -1,31 +1,13 @@
 import { gql } from 'apollo-server-express';
 
-const typeDefs = gql`
-  type User {
-    id: ID!
-    username: String!
-  }
+import userTypeDefs from './user.js';
+import taskTypeDefs from './task.js';
 
-  type Task {
-    id: ID!
-    datetime: String!
-    details: String!
-    createdAt: String
-    user: User!
-  }
-
-  type Query {
-    current: User
-    task(id: ID!): Task
-    tasks: [Task]
-  }
-
-  type Mutation {
-    register(username: String!, password: String!): String
-    login(username: String!, password: String!): String
-    addTask(datetime: String!, details: String!): Task
-    deleteTask(id: ID!): Task
-  }
+const baseTypeDefs = gql`
+  type Query
+  type Mutation
 `;
+
+const typeDefs = [baseTypeDefs, userTypeDefs, taskTypeDefs];
 
 export default typeDefs;
