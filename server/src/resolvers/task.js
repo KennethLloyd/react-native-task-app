@@ -1,10 +1,23 @@
-import { Task } from '../models/index.js';
+import { Task, User } from '../models/index.js';
 
 const taskResolvers = {
   Query: {
     async task(_, { id }, { user }) {
       if (user) {
-        const task = await Task.findOne({ where: { id, userId: user.id } });
+        const task = await Task.findOne({
+          where: {
+            id,
+          },
+          include: [
+            {
+              model: User,
+              as: 'user',
+              where: {
+                id: user.id,
+              },
+            },
+          ],
+        });
 
         return task;
       }
@@ -13,7 +26,17 @@ const taskResolvers = {
 
     async tasks(_, {}, { user }) {
       if (user) {
-        const tasks = await Task.findAll({ where: { userId: user.id } });
+        const tasks = await Task.findAll({
+          include: [
+            {
+              model: User,
+              as: 'user',
+              where: {
+                id: user.id,
+              },
+            },
+          ],
+        });
 
         return tasks;
       }

@@ -11,21 +11,7 @@
     "dev": "nodemon -r dotenv/config src/index.js",
     "docs": "apidoc -i src/controllers -o docs",
     "lint": "eslint --no-error-on-unmatched-pattern src/**",
-    "lint-fix": "eslint --no-error-on-unmatched-pattern src/** --fix",
-    "version": "auto-changelog --template changelog-template.hbs -p && git add CHANGELOG.md"
-  },
-  "auto-changelog": {
-    "commitLimit": false,
-    "unreleased": true,
-    "replaceText": {
-      "[Cc]hanges": "",
-      "[Ff]ix": "",
-      "[Bb]reak": "",
-      "[Aa]dd": ""
-    },
-    "includeBranch": [
-      "master"
-    ]
+    "lint-fix": "eslint --no-error-on-unmatched-pattern src/** --fix"
   },
   "engines": {
     "node": ">=14.0.0"
@@ -62,7 +48,6 @@
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^4.16.1",
     "@typescript-eslint/parser": "^4.16.1",
-    "auto-changelog": "^2.2.1",
     "babel-eslint": "^10.1.0",
     "eslint": "^7.21.0",
     "eslint-config-airbnb-base": "^14.2.0",
