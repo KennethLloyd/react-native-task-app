@@ -1,18 +1,12 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useQuery } from '@apollo/client';
-import { Text, Card, Input, Button } from 'react-native-elements';
-import {
-  ScrollView,
-  View,
-  StyleSheet,
-  useWindowDimensions,
-} from 'react-native';
-import { FontAwesome } from '@expo/vector-icons';
+import { Card } from 'react-native-elements';
+import { ScrollView, StyleSheet, useWindowDimensions } from 'react-native';
 import AddTask from '../components/AddTask';
 import TaskList from '../components/TaskList';
 import { GET_TASKS } from '../graphql/queries/Task';
 
-const Home = ({ navigation }) => {
+const Home = () => {
   const { width } = useWindowDimensions();
   const { data } = useQuery(GET_TASKS);
 

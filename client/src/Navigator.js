@@ -4,7 +4,7 @@ import { StyleSheet } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { useQuery } from '@apollo/client';
+import { useQuery, useApolloClient } from '@apollo/client';
 import { MaterialIcons } from '@expo/vector-icons';
 
 import { token } from './graphql/reactivities/authVariable';
@@ -17,6 +17,7 @@ const Stack = createStackNavigator();
 
 const Navigator = () => {
   const { data } = useQuery(GET_TOKEN);
+  const client = useApolloClient();
 
   const readToken = async () => {
     try {
@@ -33,8 +34,9 @@ const Navigator = () => {
   }, []);
 
   const handleLogOut = async () => {
-    await AsyncStorage.removeItem('token');
     token(null);
+    await AsyncStorage.removeItem('token');
+    setTimeout(() => client.resetStore());
   };
 
   const options = {
