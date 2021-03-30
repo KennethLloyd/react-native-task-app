@@ -1,6 +1,6 @@
 import { InMemoryCache } from '@apollo/client';
 
-import { token, isSignedIn } from './reactivities/authVariable';
+import { token } from './reactivities/authVariable';
 
 const cache = new InMemoryCache({
   typePolicies: {
@@ -9,11 +9,6 @@ const cache = new InMemoryCache({
         token: {
           read() {
             return token();
-          },
-        },
-        isSignedIn: {
-          read() {
-            return isSignedIn();
           },
         },
       },
