@@ -35,7 +35,6 @@ const Login = ({ navigation }) => {
 
         if (response.data) {
           const { login: loginToken } = response.data;
-          console.log(loginToken);
           token(loginToken);
 
           navigation.navigate('Home');
