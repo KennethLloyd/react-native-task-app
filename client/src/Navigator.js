@@ -20,9 +20,7 @@ const Navigator = () => {
     try {
       const authToken = await AsyncStorage.getItem('token');
 
-      if (authToken !== null) {
-        token(authToken);
-      }
+      setTimeout(() => token(authToken));
     } catch (e) {
       console.log(e);
     }

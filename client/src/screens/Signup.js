@@ -2,8 +2,12 @@ import React, { useState } from 'react';
 import { Text, Card, Button } from 'react-native-elements';
 import { ScrollView, StyleSheet, useWindowDimensions } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useMutation } from '@apollo/client';
 
 import Input from '../components/Input';
+import { SIGNUP } from '../graphql/mutations/User';
+import { token } from '../graphql/reactivities/authVariable';
 
 const Signup = ({ navigation }) => {
   const { width } = useWindowDimensions();
@@ -13,6 +17,7 @@ const Signup = ({ navigation }) => {
   const [usernameError, setUsernameError] = useState('');
   const [passwordError, setPasswordError] = useState('');
   const [confirmPasswordError, setConfirmPasswordError] = useState('');
+  const [signup, { loading }] = useMutation(SIGNUP);
 
   const resetValidationErrors = () => {
     setUsernameError('');
@@ -20,14 +25,26 @@ const Signup = ({ navigation }) => {
     setConfirmPasswordError('');
   };
 
-  const handleSignup = () => {
+  const handleSignup = async () => {
     resetValidationErrors();
 
     if (username && password && confirmPassword === password) {
-      console.log(username);
-      console.log(password);
+      try {
+        const response = await signup({
+          variables: {
+            username,
+            password,
+          },
+        });
 
-      navigation.navigate('Home');
+        if (response.data) {
+          const { signup: signupToken } = response.data;
+          token(signupToken);
+          await AsyncStorage.setItem('token', signupToken);
+        }
+      } catch (e) {
+        alert(e.message);
+      }
     }
     if (password !== confirmPassword) {
       setConfirmPasswordError('Passwords do not match');
@@ -69,6 +86,7 @@ const Signup = ({ navigation }) => {
         />
         <Button
           title="Sign Up"
+          loading={loading}
           buttonStyle={styles.signupBtn}
           onPress={handleSignup}
         />

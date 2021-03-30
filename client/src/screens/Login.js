@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Text, Card, Button } from 'react-native-elements';
 import { ScrollView, StyleSheet, useWindowDimensions } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { FontAwesome } from '@expo/vector-icons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useMutation } from '@apollo/client';
 
 import Input from '../components/Input';
