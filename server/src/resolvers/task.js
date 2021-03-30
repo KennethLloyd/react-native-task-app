@@ -36,6 +36,7 @@ const taskResolvers = {
               },
             },
           ],
+          order: [['datetime']],
         });
 
         return tasks;

@@ -2,9 +2,12 @@ import React, { useState } from 'react';
 import { Button } from 'react-native-elements';
 import { View, StyleSheet, useWindowDimensions } from 'react-native';
 import { format, isValid, isMatch } from 'date-fns';
+import { useMutation } from '@apollo/client';
 
 import Input from './Input';
 import DateTimePicker from './DateTimePicker';
+import { ADD_TASK } from '../graphql/mutations/Task';
+import { GET_TASKS } from '../graphql/queries/Task';
 
 const initialDate = format(new Date(), 'MM-dd-yyyy');
 const initialTime = format(new Date(), 'hh:mm a');
@@ -17,6 +20,9 @@ const AddTask = () => {
   const [taskError, setTaskError] = useState('');
   const [dateError, setDateError] = useState('');
   const [timeError, setTimeError] = useState('');
+  const [addTask, { loading }] = useMutation(ADD_TASK, {
+    refetchQueries: [{ query: GET_TASKS }],
+  });
 
   const resetValidationErrors = () => {
     setTaskError('');
@@ -44,13 +50,20 @@ const AddTask = () => {
     return false;
   };
 
-  const handleAdd = () => {
+  const handleAdd = async () => {
     resetValidationErrors();
 
     if (task && isValidDate() && isValidTime()) {
-      console.log(task);
-      console.log(date);
-      console.log(time);
+      try {
+        addTask({
+          variables: {
+            datetime: `${date} ${time}`,
+            details: task,
+          },
+        });
+      } catch (e) {
+        alert(e.message);
+      }
     }
     if (!task) {
       setTaskError('Task cannot be empty');
@@ -81,7 +94,12 @@ const AddTask = () => {
           timeError={timeError}
         />
       </View>
-      <Button title="Add" buttonStyle={styles.addBtn} onPress={handleAdd} />
+      <Button
+        title="Add"
+        loading={loading}
+        buttonStyle={styles.addBtn}
+        onPress={handleAdd}
+      />
     </>
   );
 };
