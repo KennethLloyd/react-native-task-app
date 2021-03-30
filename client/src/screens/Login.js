@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import { Text, Card, Button } from 'react-native-elements';
 import { ScrollView, StyleSheet, useWindowDimensions } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
+import { useMutation } from '@apollo/client';
 
 import Input from '../components/Input';
+import { LOGIN } from '../graphql/mutations/User';
 
 const Login = ({ navigation }) => {
   const { width } = useWindowDimensions();
@@ -11,20 +13,32 @@ const Login = ({ navigation }) => {
   const [password, setPassword] = useState('');
   const [usernameError, setUsernameError] = useState('');
   const [passwordError, setPasswordError] = useState('');
+  const [login] = useMutation(LOGIN);
 
   const resetValidationErrors = () => {
     setUsernameError('');
     setPasswordError('');
   };
 
-  const handleLogin = () => {
+  const handleLogin = async () => {
     resetValidationErrors();
 
     if (username && password) {
-      console.log(username);
-      console.log(password);
+      try {
+        const response = await login({
+          variables: {
+            username,
+            password,
+          },
+        });
 
-      navigation.navigate('Home');
+        if (response.data) {
+          const { login: token } = response.data;
+          console.log(token);
+        }
+      } catch (e) {
+        console.log(e.message);
+      }
     }
     if (!username) {
       setUsernameError('Username cannot be empty');
