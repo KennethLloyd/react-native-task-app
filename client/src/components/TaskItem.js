@@ -31,7 +31,7 @@ const TaskItem = ({ item }) => {
     <ListItem bottomDivider>
       <ListItem.Content>
         <ListItem.Title
-          style={{ textDecoration: check ? 'line-through' : 'none' }}
+          style={{ textDecorationLine: check ? 'line-through' : 'none' }}
         >
           {item.details}
         </ListItem.Title>

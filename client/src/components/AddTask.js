@@ -33,8 +33,13 @@ const AddTask = () => {
   const isValidDate = () => {
     const pattern = /\d{2}-\d{2}-\d{4}/g;
 
-    if (pattern.test(date) && isValid(new Date(date))) {
-      return true;
+    if (pattern.test(date)) {
+      const dateParts = date.split('-');
+      const reverseDate = `${dateParts[2]}-${dateParts[0]}-${dateParts[1]}`;
+      if (isValid(new Date(reverseDate))) {
+        return true;
+      }
+      return false;
     }
 
     return false;
@@ -61,6 +66,8 @@ const AddTask = () => {
             details: task,
           },
         });
+
+        setTask('');
       } catch (e) {
         alert(e.message);
       }
@@ -83,6 +90,7 @@ const AddTask = () => {
         onChangeText={(value) => setTask(value)}
         errorMessage={taskError}
         style={{ outline: 'none' }}
+        value={task}
       />
       <View style={width > 575 ? styles.datetime : styles.datetimeXs}>
         <DateTimePicker
