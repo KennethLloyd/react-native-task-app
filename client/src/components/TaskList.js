@@ -4,13 +4,11 @@ import { FlatList } from 'react-native';
 import TaskItem from './TaskItem';
 
 const TaskList = ({ list }) => {
-  const renderItem = ({ item, index }) => (
-    <TaskItem item={item} index={index} />
-  );
+  const renderItem = ({ item }) => <TaskItem item={item} />;
 
   return (
     <FlatList
-      keyExtractor={(item, index) => index.toString()}
+      keyExtractor={(item) => item.id}
       data={list}
       renderItem={renderItem}
     />
