@@ -6,6 +6,7 @@ import { useMutation } from '@apollo/client';
 
 import Input from '../components/Input';
 import { LOGIN } from '../graphql/mutations/User';
+import { token } from '../graphql/reactivities/authVariable';
 
 const Login = ({ navigation }) => {
   const { width } = useWindowDimensions();
@@ -33,8 +34,11 @@ const Login = ({ navigation }) => {
         });
 
         if (response.data) {
-          const { login: token } = response.data;
-          console.log(token);
+          const { login: loginToken } = response.data;
+          console.log(loginToken);
+          token(loginToken);
+
+          navigation.navigate('Home');
         }
       } catch (e) {
         alert(e.message);

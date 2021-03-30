@@ -2,36 +2,12 @@ import 'react-native-gesture-handler';
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import {
-  ApolloClient,
-  ApolloProvider,
-  InMemoryCache,
-  HttpLink,
-  ApolloLink,
-  concat,
-} from '@apollo/client';
-import Constants from 'expo-constants';
+import { ApolloProvider } from '@apollo/client';
 
 import Login from './src/screens/Login';
 import Signup from './src/screens/Signup';
 import Home from './src/screens/Home';
-
-const httpLink = new HttpLink({ uri: Constants.manifest.extra.API_URL });
-const authMiddleware = new ApolloLink((operation, forward) => {
-  operation.setContext({
-    headers: {
-      // authorization: localStorage.getItem('token') || null,
-      authorization: '',
-    },
-  });
-
-  return forward(operation);
-});
-
-const client = new ApolloClient({
-  cache: new InMemoryCache(),
-  link: concat(authMiddleware, httpLink),
-});
+import client from './src/graphql/client';
 
 const Stack = createStackNavigator();
 
