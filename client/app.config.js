@@ -4,7 +4,7 @@ export default ({ config }) => {
     extra: {
       API_URL:
         process.env.NODE_ENV === 'development'
-          ? 'http://localhost:5000/graphql'
+          ? 'http://192.168.1.14:5000/graphql'
           : 'http://localhost:8000/graphql',
     },
   };

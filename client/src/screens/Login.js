@@ -13,7 +13,7 @@ const Login = ({ navigation }) => {
   const [password, setPassword] = useState('');
   const [usernameError, setUsernameError] = useState('');
   const [passwordError, setPasswordError] = useState('');
-  const [login] = useMutation(LOGIN);
+  const [login, { loading }] = useMutation(LOGIN);
 
   const resetValidationErrors = () => {
     setUsernameError('');
@@ -37,7 +37,7 @@ const Login = ({ navigation }) => {
           console.log(token);
         }
       } catch (e) {
-        console.log(e.message);
+        alert(e.message);
       }
     }
     if (!username) {
@@ -67,6 +67,7 @@ const Login = ({ navigation }) => {
         />
         <Button
           title="Login"
+          loading={loading}
           buttonStyle={styles.loginBtn}
           onPress={handleLogin}
         />

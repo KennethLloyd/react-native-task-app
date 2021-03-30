@@ -20,9 +20,7 @@ const userResolvers = {
       const user = await User.findByCredentials(username, password);
 
       if (!user) {
-        throw new Error(
-          "This user doesn't exist. Please, make sure to type the right login.",
-        );
+        throw new Error('Invalid credentials');
       }
 
       const token = await user.generateAuthToken();
