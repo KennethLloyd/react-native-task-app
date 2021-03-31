@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Text, Card, Button } from 'react-native-elements';
 import {
   ScrollView,
   View,
   StyleSheet,
   useWindowDimensions,
+  Keyboard,
 } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -21,7 +22,28 @@ const Login = ({ navigation }) => {
   const [password, setPassword] = useState('');
   const [usernameError, setUsernameError] = useState('');
   const [passwordError, setPasswordError] = useState('');
+  const [isKeyboardOpen, setKeyboardOpen] = useState(false);
   const [login, { loading }] = useMutation(LOGIN);
+
+  useEffect(() => {
+    const keyboardDidShowListener = Keyboard.addListener(
+      'keyboardDidShow',
+      () => {
+        setKeyboardOpen(true);
+      },
+    );
+    const keyboardDidHideListener = Keyboard.addListener(
+      'keyboardDidHide',
+      () => {
+        setKeyboardOpen(false);
+      },
+    );
+
+    return () => {
+      keyboardDidHideListener.remove();
+      keyboardDidShowListener.remove();
+    };
+  }, []);
 
   const resetValidationErrors = () => {
     setUsernameError('');
@@ -92,7 +114,7 @@ const Login = ({ navigation }) => {
           </Text>
         </Card>
       </ScrollView>
-      <Footer />
+      {isKeyboardOpen ? <></> : <Footer />}
     </View>
   );
 };

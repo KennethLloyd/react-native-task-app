@@ -1,7 +1,13 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useQuery } from '@apollo/client';
 import { Card } from 'react-native-elements';
-import { View, StyleSheet, useWindowDimensions, Platform } from 'react-native';
+import {
+  View,
+  StyleSheet,
+  useWindowDimensions,
+  Platform,
+  Keyboard,
+} from 'react-native';
 
 import Footer from '../components/Footer';
 import TaskList from '../components/TaskList';
@@ -10,6 +16,27 @@ import { GET_TASKS } from '../graphql/queries/Task';
 const Home = () => {
   const { width } = useWindowDimensions();
   const { data } = useQuery(GET_TASKS);
+  const [isKeyboardOpen, setKeyboardOpen] = useState(false);
+
+  useEffect(() => {
+    const keyboardDidShowListener = Keyboard.addListener(
+      'keyboardDidShow',
+      () => {
+        setKeyboardOpen(true);
+      },
+    );
+    const keyboardDidHideListener = Keyboard.addListener(
+      'keyboardDidHide',
+      () => {
+        setKeyboardOpen(false);
+      },
+    );
+
+    return () => {
+      keyboardDidHideListener.remove();
+      keyboardDidShowListener.remove();
+    };
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -26,7 +53,7 @@ const Home = () => {
           <TaskList list={data ? data.tasks : []} />
         </Card>
       </View>
-      <Footer />
+      {isKeyboardOpen ? <></> : <Footer />}
     </View>
   );
 };
