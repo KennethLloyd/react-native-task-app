@@ -5,7 +5,9 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "eject": "expo eject"
+    "eject": "expo eject",
+    "lint": "eslint --no-error-on-unmatched-pattern src/**",
+    "lint-fix": "eslint --no-error-on-unmatched-pattern src/** --fix"
   },
   "dependencies": {
     "@apollo/client": "^3.3.13",
@@ -29,7 +31,11 @@
     "react-native-web": "~0.13.12"
   },
   "devDependencies": {
-    "@babel/core": "^7.9.0"
+    "@babel/core": "^7.9.0",
+    "babel-eslint": "^10.1.0",
+    "eslint": "^7.23.0",
+    "eslint-plugin-react": "^7.23.1",
+    "eslint-plugin-react-native": "^3.10.0"
   },
   "private": true
 }

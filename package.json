@@ -8,6 +8,7 @@
     "dev": "concurrently \"npm run dev:server\" \"npm run dev:client\"",
     "dev:client": "npm run web --prefix client",
     "dev:server": "npm run dev --prefix server",
+    "lint": "npm run lint --prefix client && npm run lint --prefix server",
     "preinstall": "npm install --prefix client && npm install --prefix server",
     "test": "echo \"Error: no test specified\" && exit 1",
     "version": "auto-changelog --template changelog-template.hbs -p && git add CHANGELOG.md"
@@ -26,7 +27,7 @@
     ]
   },
   "keywords": [],
-  "author": "",
+  "author": "Kenneth Lloyd Verastigue",
   "license": "ISC",
   "dependencies": {
     "auto-changelog": "^2.2.1",
