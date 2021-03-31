@@ -11,7 +11,8 @@
     "dev": "nodemon -r dotenv/config src/index.js",
     "docs": "apidoc -i src/controllers -o docs",
     "lint": "eslint --no-error-on-unmatched-pattern src/**",
-    "lint-fix": "eslint --no-error-on-unmatched-pattern src/** --fix"
+    "lint-fix": "eslint --no-error-on-unmatched-pattern src/** --fix",
+    "test": "mocha './src/tests/**/*.js'"
   },
   "engines": {
     "node": ">=14.0.0"
@@ -48,6 +49,7 @@
     "@typescript-eslint/eslint-plugin": "^4.16.1",
     "@typescript-eslint/parser": "^4.16.1",
     "babel-eslint": "^10.1.0",
+    "chai": "^4.3.4",
     "eslint": "^7.21.0",
     "eslint-config-airbnb-base": "^14.2.0",
     "eslint-config-node": "^4.1.0",
@@ -60,6 +62,7 @@
     "eslint-plugin-prettier": "^3.1.4",
     "eslint-plugin-react": "^7.22.0",
     "eslint-plugin-react-hooks": "^4.2.0",
+    "mocha": "^8.3.2",
     "nodemon": "^2.0.4",
     "prettier": "^2.0.5"
   }
