@@ -394,8 +394,10 @@ describe('Task', function () {
     });
 
     it('should return an error if task does not exist', async function () {
-      let exception, response, updatedTasksLength;
+      const userId = 'joe';
       const prevTasksLength = tasksData.length;
+
+      let exception, response, updatedTasksLength;
 
       sandbox.stub(server, 'context').returns({
         user: {
@@ -406,7 +408,9 @@ describe('Task', function () {
             findOne: ({ where }) => {
               const taskId = where.id;
 
-              return tasksData.find((task) => task.id === taskId);
+              return tasksData.find(
+                (task) => task.id === taskId && task.user.id === userId,
+              );
             },
           },
         },

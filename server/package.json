@@ -1,8 +1,8 @@
 {
-  "name": "express-sequelize-starter",
-  "version": "2.1.0",
+  "name": "server",
+  "version": "1.0.0",
   "type": "module",
-  "description": "NodeJS Express Boilerplate with Sequelize as ORM",
+  "description": "Server",
   "main": "src/index.js",
   "scripts": {
     "start": "NODE_ENV=production node -r dotenv/config src/index.js",
@@ -22,11 +22,11 @@
   },
   "keywords": [
     "api",
-    "boilerplate",
+    "graphql",
     "express",
     "jwt",
     "node",
-    "restful",
+    "apollo",
     "sequelize"
   ],
   "author": "Kenneth Lloyd Verastigue",
