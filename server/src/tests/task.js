@@ -80,7 +80,7 @@ describe('Task', function () {
     mutate = createTestClient(server).mutate;
     query = createTestClient(server).query;
 
-    sampleDate = '1617179117179';
+    sampleDate = '04-01-2021 14:15';
 
     tasksData = [
       {
@@ -266,6 +266,100 @@ describe('Task', function () {
             username: 'bob',
           },
         });
+      }
+    });
+  });
+
+  describe('#addTask', function () {
+    it('should return an error if token is missing', async function () {
+      req = {
+        headers: null,
+      };
+
+      let exception, response;
+
+      try {
+        response = await mutate({
+          mutation: ADD_TASK,
+          variables: {
+            datetime: '03-30-2021 14:15',
+            details: 'water the plants',
+          },
+        });
+      } catch (e) {
+        exception = e;
+      } finally {
+        should.not.exist(exception);
+
+        response.should.be.an('object');
+        response.errors.should.be.an('array');
+        response.errors[0].should.have.property('message');
+        response.errors[0].message.should.equal('Please authenticate');
+      }
+    });
+
+    it('should add new task if token is valid', async function () {
+      const userId = 'joe';
+      const now = new Date();
+
+      const prevTasks = tasksData.filter((task) => task.user.id === userId);
+      let updatedTasks;
+
+      sandbox.stub(server, 'context').returns({
+        user: {
+          id: userId,
+        },
+        db: {
+          Task: {
+            create: ({ datetime, details, userId }) => {
+              const newTask = {
+                id: 'jkl',
+                datetime,
+                details,
+                createdAt: now,
+                user: {
+                  id: userId,
+                  username: userId,
+                },
+              };
+
+              tasksData.push(newTask);
+
+              return newTask;
+            },
+          },
+        },
+      });
+
+      let exception, response;
+
+      try {
+        response = await query({
+          query: ADD_TASK,
+          variables: {
+            datetime: '03-30-2021 14:15',
+            details: 'water the plants',
+          },
+        });
+
+        updatedTasks = tasksData.filter((task) => task.user.id === userId);
+      } catch (e) {
+        exception = e;
+      } finally {
+        should.not.exist(exception);
+
+        response.should.be.an('object');
+        const data = JSON.parse(JSON.stringify(response.data));
+        data.addTask.should.be.an('object');
+        data.addTask.should.deep.equal({
+          id: 'jkl',
+          datetime: '03-30-2021 14:15',
+          details: 'water the plants',
+          createdAt: now.getTime().toString(),
+        });
+
+        prevTasks.length.should.equal(1);
+        updatedTasks.length.should.equal(2);
       }
     });
   });

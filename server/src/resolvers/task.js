@@ -46,13 +46,11 @@ const taskResolvers = {
   Mutation: {
     async addTask(_, { datetime, details }, { user, db }) {
       if (user) {
-        const newTask = new db.Task({
+        const newTask = await db.Task.create({
           datetime,
           details,
           userId: user.id,
         });
-
-        await newTask.save();
 
         return newTask;
       }
