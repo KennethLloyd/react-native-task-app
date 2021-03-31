@@ -5,7 +5,7 @@ import cors from 'cors';
 import initDB from './db/initialize.js';
 import typeDefs from './schemas/index.js';
 import resolvers from './resolvers/index.js';
-import authenticate from './middlewares/authenticate.js';
+import auth from './middlewares/authenticate.js';
 
 const app = express();
 
@@ -17,7 +17,7 @@ const server = new ApolloServer({
   playground: {
     endpoint: '/graphql',
   },
-  context: authenticate,
+  context: auth,
 });
 
 server.applyMiddleware({ app });

@@ -1,5 +1,7 @@
 import jwt from 'jsonwebtoken';
 
+import db from '../models/index.js';
+
 const authenticate = ({ req }) => {
   try {
     const header = req.headers.authorization;
@@ -16,10 +18,12 @@ const authenticate = ({ req }) => {
       user: {
         id: decoded.id,
       },
+      db,
     };
   } catch (e) {
     return {
       user: null,
+      db,
     };
   }
 };

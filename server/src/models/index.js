@@ -14,4 +14,4 @@ User.hasMany(Task, {
   defaultValue: null,
 });
 
-export { User, Task };
+export default { User, Task };

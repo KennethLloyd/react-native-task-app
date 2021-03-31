@@ -1,11 +1,9 @@
-import { User } from '../models/index.js';
-
 const userResolvers = {
   Query: {},
 
   Mutation: {
-    async signup(_, { username, password }) {
-      const newUser = new User({
+    async signup(_, { username, password }, { db }) {
+      const newUser = new db.User({
         username,
         password,
       });
@@ -16,8 +14,8 @@ const userResolvers = {
       return token;
     },
 
-    async login(_, { username, password }) {
-      const user = await User.findByCredentials(username, password);
+    async login(_, { username, password }, { db }) {
+      const user = await db.User.findByCredentials(username, password);
 
       if (!user) {
         throw new Error('Invalid credentials');

@@ -1,16 +1,14 @@
-import { Task, User } from '../models/index.js';
-
 const taskResolvers = {
   Query: {
-    async task(_, { id }, { user }) {
+    async task(_, { id }, { user, db }) {
       if (user) {
-        const task = await Task.findOne({
+        const task = await db.Task.findOne({
           where: {
             id,
           },
           include: [
             {
-              model: User,
+              model: db.User,
               as: 'user',
               where: {
                 id: user.id,
@@ -24,12 +22,12 @@ const taskResolvers = {
       throw new Error('Please authenticate');
     },
 
-    async tasks(_, {}, { user }) {
+    async tasks(_, {}, { user, db }) {
       if (user) {
-        const tasks = await Task.findAll({
+        const tasks = await db.Task.findAll({
           include: [
             {
-              model: User,
+              model: db.User,
               as: 'user',
               where: {
                 id: user.id,
@@ -46,9 +44,9 @@ const taskResolvers = {
   },
 
   Mutation: {
-    async addTask(_, { datetime, details }, { user }) {
+    async addTask(_, { datetime, details }, { user, db }) {
       if (user) {
-        const newTask = new Task({
+        const newTask = new db.Task({
           datetime,
           details,
           userId: user.id,
@@ -61,9 +59,11 @@ const taskResolvers = {
       throw new Error('Please authenticate');
     },
 
-    async deleteTask(_, { id }, { user }) {
+    async deleteTask(_, { id }, { user, db }) {
       if (user) {
-        const task = await Task.findOne({ where: { id, userId: user.id } });
+        const task = await db.Task.findOne({
+          where: { id, userId: user.id },
+        });
 
         if (!task) {
           throw new Error('Task does not exist');
