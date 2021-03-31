@@ -21,7 +21,7 @@ const taskResolvers = {
 
         return task;
       }
-      throw new Error("Sorry, you're not an authenticated user!");
+      throw new Error('Please authenticate');
     },
 
     async tasks(_, {}, { user }) {
@@ -41,7 +41,7 @@ const taskResolvers = {
 
         return tasks;
       }
-      throw new Error("Sorry, you're not an authenticated user!");
+      throw new Error('Please authenticate');
     },
   },
 
@@ -58,7 +58,7 @@ const taskResolvers = {
 
         return newTask;
       }
-      throw new Error("Sorry, you're not an authenticated user!");
+      throw new Error('Please authenticate');
     },
 
     async deleteTask(_, { id }, { user }) {
@@ -73,7 +73,7 @@ const taskResolvers = {
 
         return task;
       }
-      throw new Error("Sorry, you're not an authenticated user!");
+      throw new Error('Please authenticate');
     },
   },
 };
