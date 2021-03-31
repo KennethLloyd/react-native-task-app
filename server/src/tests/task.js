@@ -81,7 +81,9 @@ describe('Task', function () {
     query = createTestClient(server).query;
 
     sampleDate = '04-01-2021 14:15';
+  });
 
+  beforeEach(function () {
     tasksData = [
       {
         id: 'abc',
@@ -360,6 +362,121 @@ describe('Task', function () {
 
         prevTasks.length.should.equal(1);
         updatedTasks.length.should.equal(2);
+      }
+    });
+  });
+
+  describe('#deleteTask', function () {
+    it('should return an error if token is missing', async function () {
+      req = {
+        headers: null,
+      };
+
+      let exception, response;
+
+      try {
+        response = await mutate({
+          mutation: DELETE_TASK,
+          variables: {
+            id: 'ghi',
+          },
+        });
+      } catch (e) {
+        exception = e;
+      } finally {
+        should.not.exist(exception);
+
+        response.should.be.an('object');
+        response.errors.should.be.an('array');
+        response.errors[0].should.have.property('message');
+        response.errors[0].message.should.equal('Please authenticate');
+      }
+    });
+
+    it('should return an error if task does not exist', async function () {
+      let exception, response, updatedTasksLength;
+      const prevTasksLength = tasksData.length;
+
+      sandbox.stub(server, 'context').returns({
+        user: {
+          id: 'joe',
+        },
+        db: {
+          Task: {
+            findOne: ({ where }) => {
+              const taskId = where.id;
+
+              return tasksData.find((task) => task.id === taskId);
+            },
+          },
+        },
+      });
+
+      try {
+        response = await mutate({
+          mutation: DELETE_TASK,
+          variables: {
+            id: 'zzz',
+          },
+        });
+
+        updatedTasksLength = tasksData.length;
+      } catch (e) {
+        exception = e;
+      } finally {
+        should.not.exist(exception);
+
+        response.should.be.an('object');
+        response.errors.should.be.an('array');
+        response.errors[0].should.have.property('message');
+        response.errors[0].message.should.equal('Task does not exist');
+        prevTasksLength.should.equal(updatedTasksLength);
+      }
+    });
+
+    it('should delete task if token is valid', async function () {
+      const userId = 'joe';
+
+      const prevTasks = tasksData.filter((task) => task.user.id === userId);
+      let updatedTasks;
+
+      sandbox.stub(server, 'context').returns({
+        user: {
+          id: userId,
+        },
+        db: {
+          Task: {
+            findOne: ({ where }) => {
+              const taskId = where.id;
+
+              return {
+                destroy: () => {
+                  tasksData = tasksData.filter((task) => task.id !== taskId);
+                },
+              };
+            },
+          },
+        },
+      });
+
+      let exception, response;
+
+      try {
+        response = await query({
+          query: DELETE_TASK,
+          variables: {
+            id: 'ghi',
+          },
+        });
+
+        updatedTasks = tasksData.filter((task) => task.user.id === userId);
+      } catch (e) {
+        exception = e;
+      } finally {
+        should.not.exist(exception);
+
+        prevTasks.length.should.equal(1);
+        updatedTasks.length.should.equal(0);
       }
     });
   });
