@@ -1,6 +1,6 @@
 # react-native-task-app
 
-React Native Task App with GraphQL Apollo Express Server
+React Native Task App with GraphQL and Apollo Express Server
 
 Requirements:
 
