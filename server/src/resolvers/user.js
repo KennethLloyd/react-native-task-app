@@ -3,12 +3,16 @@ const userResolvers = {
 
   Mutation: {
     async signup(_, { username, password }, { db }) {
-      const newUser = new db.User({
+      const user = await db.User.findOne({ where: { username } });
+      if (user) {
+        throw new Error('Username already exists');
+      }
+
+      const newUser = await db.User.create({
         username,
         password,
       });
 
-      await newUser.save();
       const token = await newUser.generateAuthToken();
 
       return token;
