@@ -1,11 +1,17 @@
 import React, { useState } from 'react';
 import { Text, Card, Button } from 'react-native-elements';
-import { ScrollView, StyleSheet, useWindowDimensions } from 'react-native';
+import {
+  ScrollView,
+  View,
+  StyleSheet,
+  useWindowDimensions,
+} from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useMutation } from '@apollo/client';
 
 import Input from '../components/Input';
+import Footer from '../components/Footer';
 import { LOGIN } from '../graphql/mutations/User';
 import { token } from '../graphql/reactivities/authVariable';
 
@@ -52,39 +58,42 @@ const Login = ({ navigation }) => {
   };
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      <Card containerStyle={width > 575 ? styles.card : styles.cardXs}>
-        <Card.Title h4>Task App</Card.Title>
-        <Input
-          leftIcon={<FontAwesome name="user" size={20} color="#888888" />}
-          placeholder="Username"
-          onChangeText={(value) => setUsername(value)}
-          errorMessage={usernameError}
-        />
-        <Input
-          leftIcon={<FontAwesome name="lock" size={20} color="#888888" />}
-          placeholder="Password"
-          secureTextEntry={true}
-          onChangeText={(value) => setPassword(value)}
-          errorMessage={passwordError}
-        />
-        <Button
-          title="Login"
-          loading={loading}
-          buttonStyle={styles.loginBtn}
-          onPress={handleLogin}
-        />
-        <Text style={styles.signup}>
-          Don't have an account?{' '}
-          <Text
-            style={styles.signupLink}
-            onPress={() => navigation.navigate('Sign Up')}
-          >
-            Sign Up
+    <View style={styles.container}>
+      <ScrollView contentContainerStyle={styles.scrollContainer}>
+        <Card containerStyle={width > 575 ? styles.card : styles.cardXs}>
+          <Card.Title h4>Task App</Card.Title>
+          <Input
+            leftIcon={<FontAwesome name="user" size={20} color="#888888" />}
+            placeholder="Username"
+            onChangeText={(value) => setUsername(value)}
+            errorMessage={usernameError}
+          />
+          <Input
+            leftIcon={<FontAwesome name="lock" size={20} color="#888888" />}
+            placeholder="Password"
+            secureTextEntry={true}
+            onChangeText={(value) => setPassword(value)}
+            errorMessage={passwordError}
+          />
+          <Button
+            title="Login"
+            loading={loading}
+            buttonStyle={styles.loginBtn}
+            onPress={handleLogin}
+          />
+          <Text style={styles.signup}>
+            Don't have an account?{' '}
+            <Text
+              style={styles.signupLink}
+              onPress={() => navigation.navigate('Sign Up')}
+            >
+              Sign Up
+            </Text>
           </Text>
-        </Text>
-      </Card>
-    </ScrollView>
+        </Card>
+      </ScrollView>
+      <Footer />
+    </View>
   );
 };
 
@@ -98,11 +107,15 @@ const styles = StyleSheet.create({
     padding: 30,
   },
   container: {
-    justifyContent: 'center',
+    height: '100%',
   },
   loginBtn: {
     marginTop: 10,
     backgroundColor: '#FEB708',
+  },
+  scrollContainer: {
+    justifyContent: 'center',
+    marginBottom: 70,
   },
   signup: {
     alignSelf: 'center',
