@@ -12,6 +12,7 @@ import { GET_TOKEN } from './graphql/queries/Reactivity';
 import Login from './screens/Login';
 import Signup from './screens/Signup';
 import Home from './screens/Home';
+import colors from './variables/colors';
 
 const Stack = createStackNavigator();
 
@@ -41,9 +42,9 @@ const Navigator = () => {
 
   const options = {
     headerStyle: {
-      backgroundColor: '#23AAAA',
+      backgroundColor: colors.secondary,
     },
-    headerTintColor: '#fff',
+    headerTintColor: 'white',
   };
 
   const logOutOption = {

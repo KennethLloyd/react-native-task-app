@@ -5,6 +5,7 @@ import { useMutation } from '@apollo/client';
 
 import { DELETE_TASK } from '../graphql/mutations/Task';
 import { GET_TASKS } from '../graphql/queries/Task';
+import colors from '../variables/colors';
 
 const TaskItem = ({ item }) => {
   const [check, setCheck] = useState(false);
@@ -41,7 +42,7 @@ const TaskItem = ({ item }) => {
       </ListItem.Content>
       <ListItem.CheckBox
         checked={check}
-        checkedColor="#FEB708"
+        checkedColor={colors.primary}
         onPress={handleDelete}
       />
     </ListItem>

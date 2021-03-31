@@ -1,12 +1,13 @@
 import React from 'react';
 import { Text } from 'react-native-elements';
 import { View, Platform } from 'react-native';
+import colors from '../variables/colors';
 
 const Footer = () => {
   return (
     <View
       style={{
-        backgroundColor: '#23AAAA',
+        backgroundColor: colors.secondary,
         borderTop: '2px solid rgb(216, 216, 216)',
         textAlign: 'center',
         padding: 20,

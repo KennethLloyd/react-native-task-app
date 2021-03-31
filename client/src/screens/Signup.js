@@ -15,6 +15,7 @@ import Input from '../components/Input';
 import Footer from '../components/Footer';
 import { SIGNUP } from '../graphql/mutations/User';
 import { token } from '../graphql/reactivities/authVariable';
+import colors from '../variables/colors';
 
 const Signup = ({ navigation }) => {
   const { width } = useWindowDimensions();
@@ -91,14 +92,14 @@ const Signup = ({ navigation }) => {
         <Card containerStyle={width > 575 ? styles.card : styles.cardXs}>
           <Card.Title h4>Task App</Card.Title>
           <Input
-            leftIcon={<FontAwesome name="user" size={20} color="#888888" />}
+            leftIcon={<FontAwesome name="user" size={20} color={colors.gray} />}
             placeholder="Username"
             onChangeText={(value) => setUsername(value)}
             errorMessage={usernameError}
             style={{ outline: 'none' }}
           />
           <Input
-            leftIcon={<FontAwesome name="lock" size={20} color="#888888" />}
+            leftIcon={<FontAwesome name="lock" size={20} color={colors.gray} />}
             placeholder="Password"
             secureTextEntry={true}
             onChangeText={(value) => setPassword(value)}
@@ -106,7 +107,7 @@ const Signup = ({ navigation }) => {
             style={{ outline: 'none' }}
           />
           <Input
-            leftIcon={<FontAwesome name="lock" size={20} color="#888888" />}
+            leftIcon={<FontAwesome name="lock" size={20} color={colors.gray} />}
             placeholder="Confirm password"
             secureTextEntry={true}
             onChangeText={(value) => setConfirmPassword(value)}
@@ -152,16 +153,16 @@ const styles = StyleSheet.create({
   },
   signupBtn: {
     marginTop: 10,
-    backgroundColor: '#FEB708',
+    backgroundColor: colors.primary,
   },
   login: {
     alignSelf: 'center',
     marginTop: 10,
-    color: '#888888',
+    color: colors.gray,
   },
   loginLink: {
     fontWeight: 'bold',
-    color: '#888888',
+    color: colors.gray,
   },
 });
 

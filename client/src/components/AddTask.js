@@ -8,6 +8,7 @@ import Input from './Input';
 import DateTimePicker from './DateTimePicker';
 import { ADD_TASK } from '../graphql/mutations/Task';
 import { GET_TASKS } from '../graphql/queries/Task';
+import colors from '../variables/colors';
 
 const initialDate = format(new Date(), 'MM-dd-yyyy');
 const initialTime = format(new Date(), 'hh:mm a');
@@ -124,7 +125,7 @@ const styles = StyleSheet.create({
   },
   addBtn: {
     marginTop: 10,
-    backgroundColor: '#FEB708',
+    backgroundColor: colors.primary,
   },
 });
 

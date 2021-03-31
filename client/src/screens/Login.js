@@ -15,6 +15,7 @@ import Input from '../components/Input';
 import Footer from '../components/Footer';
 import { LOGIN } from '../graphql/mutations/User';
 import { token } from '../graphql/reactivities/authVariable';
+import colors from '../variables/colors';
 
 const Login = ({ navigation }) => {
   const { width } = useWindowDimensions();
@@ -85,13 +86,13 @@ const Login = ({ navigation }) => {
         <Card containerStyle={width > 575 ? styles.card : styles.cardXs}>
           <Card.Title h4>Task App</Card.Title>
           <Input
-            leftIcon={<FontAwesome name="user" size={20} color="#888888" />}
+            leftIcon={<FontAwesome name="user" size={20} color={colors.gray} />}
             placeholder="Username"
             onChangeText={(value) => setUsername(value)}
             errorMessage={usernameError}
           />
           <Input
-            leftIcon={<FontAwesome name="lock" size={20} color="#888888" />}
+            leftIcon={<FontAwesome name="lock" size={20} color={colors.gray} />}
             placeholder="Password"
             secureTextEntry={true}
             onChangeText={(value) => setPassword(value)}
@@ -133,7 +134,7 @@ const styles = StyleSheet.create({
   },
   loginBtn: {
     marginTop: 10,
-    backgroundColor: '#FEB708',
+    backgroundColor: colors.primary,
   },
   scrollContainer: {
     justifyContent: 'center',
@@ -142,11 +143,11 @@ const styles = StyleSheet.create({
   signup: {
     alignSelf: 'center',
     marginTop: 10,
-    color: '#888888',
+    color: colors.gray,
   },
   signupLink: {
     fontWeight: 'bold',
-    color: '#888888',
+    color: colors.gray,
   },
 });
 
