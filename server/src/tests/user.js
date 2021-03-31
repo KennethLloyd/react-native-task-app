@@ -66,6 +66,7 @@ describe('User', function () {
         exception = e;
       } finally {
         should.not.exist(exception);
+
         response.should.be.an('object');
         response.errors.should.be.an('array');
         response.errors[0].should.have.property('message');
@@ -101,6 +102,7 @@ describe('User', function () {
         exception = e;
       } finally {
         should.not.exist(exception);
+
         response.should.be.an('object');
         response.data.login.should.equal('mytoken');
       }
@@ -132,6 +134,7 @@ describe('User', function () {
         exception = e;
       } finally {
         should.not.exist(exception);
+
         response.should.be.an('object');
         response.errors.should.be.an('array');
         response.errors[0].should.have.property('message');
@@ -168,6 +171,7 @@ describe('User', function () {
         exception = e;
       } finally {
         should.not.exist(exception);
+
         response.should.be.an('object');
         response.data.signup.should.equal('mytoken');
       }
