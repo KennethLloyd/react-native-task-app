@@ -1,6 +1,6 @@
-# react-native-graphql-starter
+# react-native-task-app
 
-React Native App with Express GraphQL Boilerplate
+React Native Task App with Apollo Express Server
 
 Requirements:
 
@@ -21,9 +21,9 @@ $ nvm use
 $ npm install
 ```
 
-3. Go to `/server` and setup environment variables by adding an `.env` file based on `.env.example`
+3. Go to `/server` directory and setup environment variables by adding an `.env` file based on `.env.example`
 
-4. Go to the root directory to create the database and run the migration script
+4. Go back to the project root directory to create the database and run the migration script
 
 ```sh
 $ npm run db:migrate
@@ -35,11 +35,22 @@ $ npm run db:migrate
 $ npm run db:seed
 ```
 
-6. Start the dev server
+6. Start the client and dev server
 
 ```sh
 $ npm run dev
 ```
+
+Test Credentials:
+
+- username: `user1`
+- password: `12345aA!`
+
+- username: `user2`
+- password: `12345aA!`
+
+- username: `user3`
+- password: `12345aA!`
 
 To open in an Android or iOS emulator:
 
