@@ -1,6 +1,6 @@
 {
   "name": "react-native-task-app",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "React Native Task App with Apollo Express Server",
   "scripts": {
     "db:migrate": "npm run db-migrate --prefix server",
