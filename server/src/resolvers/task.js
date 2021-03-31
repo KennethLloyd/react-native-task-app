@@ -22,7 +22,7 @@ const taskResolvers = {
       throw new Error('Please authenticate');
     },
 
-    async tasks(_, {}, { user, db }) {
+    async tasks(_, args, { user, db }) {
       if (user) {
         const tasks = await db.Task.findAll({
           include: [

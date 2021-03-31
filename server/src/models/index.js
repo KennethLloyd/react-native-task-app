@@ -14,4 +14,9 @@ User.hasMany(Task, {
   defaultValue: null,
 });
 
-export default { User, Task };
+const Models = {
+  User,
+  Task,
+};
+
+export default Models;

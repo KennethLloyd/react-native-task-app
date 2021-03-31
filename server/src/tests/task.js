@@ -1,5 +1,3 @@
-'use strict';
-
 import chai from 'chai';
 import sinon from 'sinon';
 import { ApolloServer, gql } from 'apollo-server-express';
@@ -64,12 +62,10 @@ const DELETE_TASK = gql`
 `;
 
 describe('Task', function () {
-  let sandbox, server, query, mutate, tasksData, sampleDate, req;
+  let sandbox, server, query, mutate, tasksData, sampleDate;
 
   before(function () {
     sandbox = sinon.createSandbox();
-
-    req = {};
 
     server = new ApolloServer({
       typeDefs,
@@ -124,10 +120,6 @@ describe('Task', function () {
 
   describe('#getTasks', function () {
     it('should return an error if token is missing', async function () {
-      req = {
-        headers: null,
-      };
-
       let exception, response;
 
       try {
@@ -201,10 +193,6 @@ describe('Task', function () {
 
   describe('#getTask', function () {
     it('should return an error if token is missing', async function () {
-      req = {
-        headers: null,
-      };
-
       let exception, response;
 
       try {
@@ -274,10 +262,6 @@ describe('Task', function () {
 
   describe('#addTask', function () {
     it('should return an error if token is missing', async function () {
-      req = {
-        headers: null,
-      };
-
       let exception, response;
 
       try {
@@ -368,10 +352,6 @@ describe('Task', function () {
 
   describe('#deleteTask', function () {
     it('should return an error if token is missing', async function () {
-      req = {
-        headers: null,
-      };
-
       let exception, response;
 
       try {
@@ -463,10 +443,10 @@ describe('Task', function () {
         },
       });
 
-      let exception, response;
+      let exception;
 
       try {
-        response = await query({
+        await query({
           query: DELETE_TASK,
           variables: {
             id: 'ghi',

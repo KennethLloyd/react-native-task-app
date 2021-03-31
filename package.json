@@ -1,7 +1,7 @@
 {
   "name": "react-native-graphql-starter",
   "version": "0.1.0",
-  "description": "",
+  "description": "React Native GraphQL Starter",
   "scripts": {
     "db:migrate": "npm run db-migrate --prefix server",
     "db:seed": "npm run db-seed --prefix server",
